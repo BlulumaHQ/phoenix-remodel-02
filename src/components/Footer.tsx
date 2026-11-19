@@ -102,7 +102,7 @@ export default function Footer() {
       {/* Copyright bar */}
       <div className="border-t border-section-dark-foreground/10">
         <div className="container py-5 flex flex-col md:flex-row items-center justify-center gap-1 text-xs text-section-dark-foreground/50">
-          <span>© {year} Phoenix Remodel. All rights reserved.</span>
+          <span>© {year} Phoenix Remodel. All rights reserved.{" "}<span className="block mt-1 opacity-80" data-concept-note>Design concept for portfolio purposes only. Not the official website of Phoenix Commercial Remodeling.</span></span>
           <span className="hidden md:inline mx-1">|</span>
           <span>
             Web Design by{" "}
