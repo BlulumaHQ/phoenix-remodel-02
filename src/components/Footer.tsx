@@ -1,128 +1,60 @@
 import { Link } from "react-router-dom";
-
-const SERVICE_LINKS = [
-  { label: "Commercial Remodels", path: "/commercial-remodel" },
-  { label: "Landscape Design", path: "/commercial-and-residential-landscaping" },
-  { label: "Painting", path: "/painting" },
-  { label: "New Construction", path: "/new-construction" },
-  { label: "Fencing", path: "/commercial-fencing" },
-  { label: "Insulation", path: "/insulation" },
-];
-
-const NAV_LINKS = [
-  { label: "Home", path: "/" },
-  { label: "About Us", path: "/about-us" },
-  { label: "Contact", path: "/contact" },
-];
+import { SERVICES, SITE } from "@/lib/site";
+import { Wordmark } from "./Header";
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="section-dark">
-      <div className="container section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-6">
-          {/* Col 1 — Brand */}
-          <div className="md:col-span-1">
-            <span className="font-serif text-xl font-bold text-primary-foreground">
-              Phoenix Remodel
-            </span>
-            <p className="mt-4 text-sm leading-relaxed text-section-dark-foreground/70">
-              Arizona's leading commercial construction company. Fully bonded, licensed and insured with over 40 years of experience.
-            </p>
+    <footer className="bg-coal text-bone">
+      <section className="bg-amber text-coal">
+        <div className="wrap flex flex-col gap-8 py-20 md:py-24 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-[760px]">
+            <h2 className="display text-[48px] md:text-[72px] lg:text-[92px]">Ready to start your project?</h2>
+            <p className="mt-4 text-lg">Talk to a construction expert today. No-obligation free quote.</p>
           </div>
-
-          {/* Col 2 — Spacer */}
-          <div className="hidden md:block" />
-
-          {/* Col 3 — Nav */}
-          <div>
-            <h4 className="font-serif text-sm font-bold uppercase tracking-wider text-primary mb-5">
-              Navigation
-            </h4>
-            <ul className="space-y-2.5">
-              {NAV_LINKS.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-section-dark-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="flex min-w-[280px] flex-col gap-3">
+            <a href={SITE.phoneHref} className="btn-coal">Call {SITE.phone}</a>
+            <Link to="/contact" className="inline-flex items-center justify-center border-2 border-coal px-8 py-[14px] font-display text-lg font-bold uppercase tracking-[0.08em] text-coal transition-colors hover:bg-coal hover:text-amber md:text-xl">
+              Request Free Consultation
+            </Link>
           </div>
+        </div>
+      </section>
 
-          {/* Col 4 — Services */}
-          <div>
-            <h4 className="font-serif text-sm font-bold uppercase tracking-wider text-primary mb-5">
-              Services
-            </h4>
-            <ul className="space-y-2.5">
-              {SERVICE_LINKS.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-section-dark-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 5 — Contact */}
-          <div>
-            <h4 className="font-serif text-sm font-bold uppercase tracking-wider text-primary mb-5">
-              Get In Touch
-            </h4>
-            <ul className="space-y-2.5 text-sm text-section-dark-foreground/70">
-              <li>
-                <a href="tel:6029752870" className="hover:text-primary transition-colors">
-                  (602) 975-2870
-                </a>
-              </li>
-              <li>
-                <a href="mailto:sales@phoenixremodel.net" className="hover:text-primary transition-colors">
-                  sales@phoenixremodel.net
-                </a>
-              </li>
-              <li>
-                11811 N Tatum Blvd<br />
-                Suite 3031<br />
-                Phoenix, AZ 85028
-              </li>
-            </ul>
-          </div>
+      <div className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+        <div className="flex flex-col gap-4 lg:col-span-2">
+          <Wordmark className="text-[40px] md:text-[48px]" />
+          <p className="max-w-[380px] text-[15px] leading-relaxed text-ash">
+            Arizona’s commercial construction company. Fully bonded, licensed and insured with over 40 years of experience.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2.5 text-[15px]">
+          <span className="font-display text-lg font-bold uppercase tracking-[0.12em] text-amber">Services</span>
+          {SERVICES.map((s) => (
+            <Link key={s.path} to={s.path} className="text-ash hover:text-amber">{s.title}</Link>
+          ))}
+        </div>
+        <div className="flex flex-col gap-2.5 text-[15px] text-ash">
+          <span className="font-display text-lg font-bold uppercase tracking-[0.12em] text-amber">Office</span>
+          <span>{SITE.street}</span>
+          <span>{SITE.city}</span>
+          <a href={SITE.phoneHref} className="hover:text-amber">{SITE.phone}</a>
+          <a href={`mailto:${SITE.email}`} className="hover:text-amber">{SITE.email}</a>
+          <Link to="/about-us" className="mt-2 hover:text-amber">About Us</Link>
+          <Link to="/contact" className="hover:text-amber">Contact</Link>
         </div>
       </div>
 
-      {/* Copyright bar */}
-      <div className="border-t border-section-dark-foreground/10">
-        <div className="container py-5 flex flex-col md:flex-row items-center justify-center gap-1 text-xs text-section-dark-foreground/50">
-          <span>© {year} Phoenix Remodel. All rights reserved.{" "}<span className="block mt-1 opacity-80" data-concept-note>Design concept for portfolio purposes only. Not the official website of Phoenix Commercial Remodeling.</span></span>
-          <span className="hidden md:inline mx-1">|</span>
+      <div className="border-t border-iron">
+        <div className="wrap flex flex-col gap-2 py-6 text-xs text-[#8C877E] md:flex-row md:justify-between">
           <span>
-            Web Design by{" "}
-            <a
-              href="https://bluluma.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-            >
-              Bluluma
-            </a>
-            {" "}| Powered by{" "}
-            <a
-              href="https://swiftlift.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-            >
-              SwiftLift
-            </a>
+            © {year} Phoenix Remodel. All rights reserved.{" "}
+            <span data-concept-note>Design concept for portfolio purposes only. Not the official website of Phoenix Commercial Remodeling.</span>
+          </span>
+          <span>
+            Web Design by <a href="https://bluluma.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber">Bluluma</a> | Powered by{" "}
+            <a href="https://swiftlift.app" target="_blank" rel="noopener noreferrer" className="hover:text-amber">SwiftLift</a>
           </span>
         </div>
       </div>

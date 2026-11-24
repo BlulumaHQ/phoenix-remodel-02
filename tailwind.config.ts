@@ -14,6 +14,12 @@ export default {
     },
     extend: {
       colors: {
+        coal: "#121212",
+        steel: "#1C1C1C",
+        iron: "#2E2E2E",
+        amber: "#F2A900",
+        bone: "#F4F1EA",
+        ash: "#B9B4AA",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -63,8 +69,9 @@ export default {
         "section-dark-foreground": "hsl(var(--section-dark-foreground))",
       },
       fontFamily: {
-        serif: ["Libre Baskerville", "Georgia", "serif"],
-        sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+        serif: ["Barlow Condensed", "Arial Narrow", "sans-serif"],
+        display: ["Barlow Condensed", "Arial Narrow", "sans-serif"],
+        sans: ["Barlow", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

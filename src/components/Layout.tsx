@@ -5,15 +5,15 @@ import StickyCTA from "./StickyCTA";
 
 export default function Layout() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col bg-coal text-bone">
       <Header />
-      <main className="flex-1 pt-20">
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />
       <StickyCTA />
       {/* Spacer for mobile sticky bar */}
-      <div className="lg:hidden h-16" />
+      <div className="h-[72px] lg:hidden" />
     </div>
   );
 }

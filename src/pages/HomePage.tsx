@@ -1,257 +1,146 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Phone, Shield, Clock, Award, MapPin, Building2, Paintbrush, Trees, HardHat, Fence, Thermometer, ArrowRight } from "lucide-react";
+import { AREAS, SERVICES, SITE } from "@/lib/site";
 import heroImg from "@/assets/hero-commercial.jpg";
-import commercialImg from "@/assets/services-commercial.jpg";
-import landscapeImg from "@/assets/services-landscape.jpg";
-import paintingImg from "@/assets/services-painting.jpg";
-import newConstructionImg from "@/assets/services-newconstruction.jpg";
-import fencingImg from "@/assets/services-fencing.jpg";
-import insulationImg from "@/assets/services-insulation.jpg";
+import teamImg from "@/assets/about-team.jpg";
 
-const SERVICES = [
-  { title: "Commercial Remodels", desc: "Office remodeling, tenant improvements, design builds, and complete commercial renovations.", img: commercialImg, path: "/commercial-remodel", icon: Building2 },
-  { title: "Landscape Design", desc: "Commercial and residential landscaping with desert-native plants and modern hardscaping.", img: landscapeImg, path: "/commercial-and-residential-landscaping", icon: Trees },
-  { title: "Painting", desc: "Interior and exterior commercial painting with premium materials and expert crews.", img: paintingImg, path: "/painting", icon: Paintbrush },
-  { title: "New Construction", desc: "Ground-up commercial building, custom homes, and complete build-out services.", img: newConstructionImg, path: "/new-construction", icon: HardHat },
-  { title: "Fencing", desc: "Custom iron, steel, aluminum, chain link, block walls, and lifetime vinyl fencing.", img: fencingImg, path: "/commercial-fencing", icon: Fence },
-  { title: "Insulation", desc: "Spray foam insulation with highest energy efficiency ratings and fire resistance.", img: insulationImg, path: "/insulation", icon: Thermometer },
+const STATS = [
+  { value: "40+", label: "Years construction experience" },
+  { value: "KB2", label: "Licensed for projects up to $6M" },
+  { value: "B·L·I", label: "Bonded, licensed & insured" },
+  { value: "AZ", label: "Locally owned & operated" },
 ];
 
-const TRUST = [
-  { icon: Clock, label: "40+ Years", desc: "Construction experience" },
-  { icon: Shield, label: "Fully Licensed", desc: "Bonded & insured" },
-  { icon: Award, label: "KB2 Licensed", desc: "Up to $6M projects" },
-  { icon: MapPin, label: "Locally Owned", desc: "Phoenix Metro Area" },
+const WHY = [
+  "40+ years of construction and remodeling in the Phoenix Metro Area",
+  "Fully bonded, licensed and insured — KB2 licensing for build-outs up to $6 million",
+  "Locally owned and operated general contractor with a full range of services",
+  "Creative quality designs, plans, permits and material selections all under one roof",
 ];
-
-const AREAS = ["Phoenix", "Scottsdale", "Tempe", "Glendale", "Peoria", "Avondale", "Surprise", "Paradise Valley", "Mesa", "Chandler", "Gilbert", "Anthem", "Cave Creek", "Fountain Hills", "Tucson", "Flagstaff", "Buckeye", "Goodyear"];
 
 export default function HomePage() {
   useScrollReveal();
+  const [feature, second, ...rest] = SERVICES;
 
   return (
     <>
       {/* HERO */}
-      <section className="relative min-h-[85vh] flex items-center">
-        <div className="absolute inset-0">
-          <img src={heroImg} alt="Commercial remodeling in Phoenix" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-foreground/60" />
+      <section className="relative flex min-h-[760px] items-end overflow-hidden">
+        <img src={heroImg} alt="Commercial build-out in Phoenix" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-coal via-coal/75 to-coal/10" />
+        <div className="wrap relative flex w-full flex-col gap-7 pb-24 pt-28">
+          <span className="kicker">Arizona’s Commercial Contractors</span>
+          <h1 className="display max-w-[900px] text-[64px] sm:text-[96px] lg:text-[140px]">
+            Built right.<br /><span className="text-amber">Built on time.</span>
+          </h1>
+          <p className="max-w-[560px] text-lg leading-relaxed text-[#D6D1C7] md:text-xl">
+            Commercial remodeling, office build-outs and new construction across the Phoenix Metro. 40+ years of experience — fully bonded, licensed and insured.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/contact" className="btn-amber">Get a Free Estimate</Link>
+            <a href={SITE.phoneHref} className="btn-ghost">{SITE.phone}</a>
+          </div>
         </div>
-        <div className="container relative z-10 py-24">
-          <div className="max-w-2xl">
-            <p className="font-sans text-sm uppercase tracking-[0.2em] text-primary-foreground/80 mb-4">
-              Arizona's Premier Commercial Contractors
-            </p>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-bold leading-[1.05] text-primary-foreground text-balance mb-6">
-              Commercial Remodeling Contractors of Arizona
-            </h1>
-            <p className="text-lg text-primary-foreground/85 leading-relaxed max-w-xl mb-8 text-pretty">
-              Over 40 years of construction and remodeling experience. Fully bonded, licensed and insured for commercial building and construction.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="tel:6029752870">
-                <Button variant="hero" size="xl" className="gap-2">
-                  <Phone className="w-5 h-5" />
-                  Get a Free Estimate
-                </Button>
-              </a>
-              <Link to="/contact">
-                <Button variant="heroOutline" size="xl">
-                  Free Consultation
-                </Button>
-              </Link>
+      </section>
+
+      {/* STATS */}
+      <section className="border-t-4 border-amber bg-steel">
+        <div className="wrap grid grid-cols-2 lg:grid-cols-4">
+          {STATS.map((s) => (
+            <div key={s.label} className="flex flex-col gap-1 border-iron py-9 pr-4 [&:not(:last-child)]:lg:border-r lg:px-6 lg:first:pl-0">
+              <span className="font-display text-[52px] font-extrabold leading-none text-amber md:text-[64px]">{s.value}</span>
+              <span className="text-[15px] text-ash">{s.label}</span>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* TRUST BADGES */}
-      <section className="bg-primary py-6">
-        <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {TRUST.map((t) => (
-              <div key={t.label} className="flex items-center gap-3 justify-center">
-                <t.icon className="w-8 h-8 text-primary-foreground/80 shrink-0" />
-                <div>
-                  <p className="font-sans font-bold text-primary-foreground text-sm">{t.label}</p>
-                  <p className="font-sans text-xs text-primary-foreground/70">{t.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROBLEM → SOLUTION */}
-      <section className="section-padding">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center animate-on-scroll">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance">
-              Design Build Contractors of Arizona
+      {/* SERVICES */}
+      <section className="py-24 md:py-32">
+        <div className="wrap flex flex-col gap-12">
+          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <h2 className="display text-[56px] md:text-[92px]">
+              What we <span className="outline-amber">build</span>
             </h2>
-            <p className="text-muted-foreground leading-relaxed text-pretty mb-4">
-              Phoenix Remodel is a highly reputable Arizona General Contractor and a leader in delivering an array of Design Build and Remodeling Services. We work closely with our customers through the Design Build Process to ensure a high level of success &amp; satisfaction with the final outcome.
-            </p>
-            <p className="text-muted-foreground leading-relaxed text-pretty">
-              Our company believes in developing a long lasting relationship with our clients by gaining their trust through exceeding their expectations by delivering high quality work at an affordable price. Phoenix Remodel offers its clients Peace of Mind by providing creative quality designs, plans and permits, and material selections all under one roof.
+            <p className="max-w-[420px] text-lg text-ash">
+              A full range of custom construction services, from commercial remodels to ground-up builds.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* SERVICES GRID */}
-      <section className="section-alt section-padding">
-        <div className="container">
-          <div className="text-center mb-14 animate-on-scroll">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
-              Our Construction Services
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-pretty">
-              From commercial remodels to new construction, we offer a full range of custom construction services.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((s, i) => (
+          <div className="grid gap-5 lg:grid-cols-3">
+            {[feature, second].map((s, i) => (
               <Link
                 key={s.path}
                 to={s.path}
-                className={`group relative overflow-hidden rounded-lg bg-card shadow-md hover:shadow-xl transition-all duration-300 animate-on-scroll stagger-${i + 1}`}
+                className={`group relative flex min-h-[460px] items-end overflow-hidden ${i === 0 ? "lg:col-span-2" : ""}`}
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={s.img}
-                    alt={s.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                <img src={s.img} alt={s.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-coal via-coal/30 to-transparent" />
+                <div className="relative flex flex-col gap-2 p-8">
+                  {i === 0 && <span className="self-start bg-amber px-3 py-1 font-display text-base font-bold tracking-[0.1em] text-coal">CORE SERVICE</span>}
+                  <span className="font-display text-[40px] font-extrabold uppercase leading-none md:text-[48px]">{s.title}</span>
+                  <span className="max-w-[460px] text-base text-[#D6D1C7]">{s.short}</span>
                 </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <s.icon className="w-5 h-5 text-primary" />
-                    <h3 className="font-serif text-lg font-bold text-foreground">{s.title}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{s.desc}</p>
-                  <span className="inline-flex items-center gap-1 mt-3 text-sm font-sans font-semibold text-primary group-hover:gap-2 transition-all">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {rest.map((s) => (
+              <Link key={s.path} to={s.path} className="group flex flex-col bg-steel">
+                <div className="overflow-hidden">
+                  <img src={s.img} alt={s.title} className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
+                <span className="px-6 pb-1.5 pt-6 font-display text-[28px] font-bold uppercase leading-none group-hover:text-amber">{s.title}</span>
+                <span className="px-6 pb-7 text-[15px] leading-snug text-ash">{s.short}</span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* MID-PAGE CTA */}
-      <section className="bg-primary section-padding">
-        <div className="container text-center animate-on-scroll">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary-foreground mb-4 text-balance">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-primary-foreground/85 max-w-lg mx-auto mb-8 text-pretty">
-            Call one of our construction experts to get it done right, on time and within budget. We're happy to provide you with a no obligation free quote.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:6029752870">
-              <Button variant="heroOutline" size="xl" className="gap-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                <Phone className="w-5 h-5" />
-                Call (602) 975-2870
-              </Button>
-            </a>
-            <Link to="/contact">
-              <Button variant="hero" size="xl" className="bg-foreground text-primary-foreground hover:bg-foreground/90">
-                Request Free Consultation
-              </Button>
-            </Link>
+      {/* WHY */}
+      <section className="bg-bone py-24 text-coal md:py-32">
+        <div className="wrap grid items-center gap-16 lg:grid-cols-2">
+          <div className="relative">
+            <img src={teamImg} alt="Phoenix Remodel team reviewing plans" className="h-[420px] w-full object-cover md:h-[540px]" />
+            <div className="absolute -bottom-4 -left-2 bg-amber px-7 py-5 font-display text-2xl font-extrabold uppercase leading-none md:-left-4">
+              Design · Plans · Permits
+            </div>
+          </div>
+          <div className="flex flex-col gap-6">
+            <h2 className="display text-[52px] md:text-[80px]">Why Phoenix Remodel</h2>
+            <p className="text-lg leading-relaxed text-[#4C4842]">
+              A highly reputable Arizona general contractor delivering design-build and remodeling services — high-quality work at an affordable price, and peace of mind under one roof.
+            </p>
+            <ol className="flex flex-col border-t-2 border-coal">
+              {WHY.map((w, i) => (
+                <li key={w} className="flex gap-5 border-b border-[#D2CCC0] py-4 text-[17px] leading-snug">
+                  <span className="font-display text-2xl font-extrabold text-[#9A6B00]">{String(i + 1).padStart(2, "0")}</span>
+                  {w}
+                </li>
+              ))}
+            </ol>
+            <Link to="/about-us" className="btn-coal self-start">About Us</Link>
           </div>
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="section-padding">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-on-scroll from-left">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance">
-                Why Phoenix Remodel?
-              </h2>
-              <div className="space-y-5">
-                {[
-                  "Over 40 years construction and remodeling experience in the Phoenix Metro Area",
-                  "Fully bonded, licensed and insured — KB2 licensing for up to $6 million dollar build outs",
-                  "Locally owned & operated General Contractor offering a full range of services",
-                  "Creative quality designs, plans, permits, and material selections all under one roof",
-                  "We service Phoenix, Scottsdale, Tempe, Glendale, Mesa, Chandler and surrounding areas",
-                ].map((text, i) => (
-                  <div key={i} className="flex gap-3">
-                    <Shield className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-muted-foreground text-sm leading-relaxed">{text}</p>
-                  </div>
-                ))}
-              </div>
-              <a href="tel:6029752870" className="inline-block mt-8">
-                <Button variant="default" size="lg" className="gap-2">
-                  <Phone className="w-4 h-4" />
-                  Schedule a Free Estimate
-                </Button>
-              </a>
-            </div>
-            <div className="animate-on-scroll from-right">
-              <img
-                src={commercialImg}
-                alt="Phoenix commercial construction"
-                className="rounded-lg shadow-xl w-full"
-                loading="lazy"
-              />
-            </div>
+      {/* AREAS */}
+      <section className="py-24 md:py-32">
+        <div className="wrap flex flex-col gap-10">
+          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <h2 className="display text-[52px] md:text-[80px]">
+              Areas we <span className="text-amber">serve</span>
+            </h2>
+            <p className="max-w-[420px] text-lg text-ash">Fast, friendly, detailed estimates for any project across the Phoenix Metro Area and beyond.</p>
           </div>
-        </div>
-      </section>
-
-      {/* AREAS SERVED */}
-      <section className="section-alt section-padding">
-        <div className="container animate-on-scroll">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 text-center text-balance">
-            Areas We Serve
-          </h2>
-          <p className="text-muted-foreground text-center max-w-lg mx-auto mb-10 text-pretty">
-            Providing fast, friendly, detailed estimates for any project across the Phoenix Metro Area and beyond.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {AREAS.map((area) => (
-              <span
-                key={area}
-                className="px-4 py-2 bg-card rounded-md text-sm font-sans font-medium text-foreground shadow-sm border border-border"
-              >
-                {area}
+          <div className="flex flex-wrap gap-2.5">
+            {AREAS.map((a) => (
+              <span key={a} className="border border-iron px-5 py-3 font-display text-xl font-semibold uppercase tracking-[0.06em]">
+                {a}
               </span>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="section-dark section-padding">
-        <div className="container text-center animate-on-scroll">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-section-dark-foreground mb-4 text-balance">
-            See What We Can Do For You
-          </h2>
-          <p className="text-section-dark-foreground/70 max-w-lg mx-auto mb-8 text-pretty">
-            Turn to the true professionals at Phoenix Remodel. We invite you to call us today to discuss your project.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:6029752870">
-              <Button variant="hero" size="xl" className="gap-2">
-                <Phone className="w-5 h-5" />
-                Call Now
-              </Button>
-            </a>
-            <Link to="/contact">
-              <Button variant="heroOutline" size="xl" className="border-section-dark-foreground text-section-dark-foreground hover:bg-section-dark-foreground/10">
-                Contact Us
-              </Button>
-            </Link>
           </div>
         </div>
       </section>

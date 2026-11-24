@@ -1,36 +1,27 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { SERVICES, SITE } from "@/lib/site";
 
-const NAV_ITEMS = [
+const NAV = [
   { label: "Home", path: "/" },
-  {
-    label: "Services",
-    children: [
-      { label: "Commercial Remodels", path: "/commercial-remodel" },
-      { label: "Landscape Design", path: "/commercial-and-residential-landscaping" },
-      { label: "Painting", path: "/painting" },
-      { label: "New Construction", path: "/new-construction" },
-      { label: "Fencing", path: "/commercial-fencing" },
-      { label: "Insulation", path: "/insulation" },
-    ],
-  },
+  { label: "Services", children: SERVICES.map((s) => ({ label: s.title, path: s.path })) },
   { label: "About Us", path: "/about-us" },
   { label: "Contact", path: "/contact" },
 ];
 
+export function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <span className={`font-display font-extrabold uppercase leading-none tracking-[0.02em] ${className}`}>
+      Phoenix<span className="text-amber">/</span>Remodel
+    </span>
+  );
+}
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -39,107 +30,97 @@ export default function Header() {
   }, [location.pathname]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/95 backdrop-blur shadow-md" : "bg-transparent"
-      }`}
-    >
-      <div className="container flex items-center justify-between h-20">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img
-            src="https://phoenixremodel.net/images/Asset-2Phx-Remodel-logo.png"
-            alt="Phoenix Remodel"
-            className="h-[75px] w-auto"
-          />
-        </Link>
+    <header className="sticky top-0 z-50">
+      <div className="bg-amber text-coal">
+        <div className="wrap flex flex-wrap justify-between gap-2 py-2 text-sm font-semibold">
+          <span>KB2 licensed · up to $6M commercial build-outs</span>
+          <a href={SITE.phoneHref} className="hover:underline">Call {SITE.phone}</a>
+        </div>
+      </div>
+      <div className="border-b border-iron bg-coal/95 backdrop-blur">
+        <div className="wrap flex h-20 items-center justify-between gap-6">
+          <Link to="/" aria-label="Phoenix Remodel home">
+            <Wordmark className="text-[28px] text-bone md:text-[34px]" />
+          </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {NAV_ITEMS.map((item) =>
-            item.children ? (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
-              >
-                <button
-                  className={`font-sans font-medium text-sm tracking-wide uppercase transition-colors ${
-                    scrolled ? "text-foreground hover:text-primary" : "text-foreground hover:text-primary"
+          <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
+            {NAV.map((item) =>
+              item.children ? (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setServicesOpen(true)}
+                  onMouseLeave={() => setServicesOpen(false)}
+                >
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 font-display text-lg font-semibold uppercase tracking-[0.1em] text-bone hover:text-amber"
+                    aria-expanded={servicesOpen}
+                  >
+                    {item.label} <ChevronDown className="h-4 w-4" />
+                  </button>
+                  {servicesOpen && (
+                    <div className="absolute left-0 top-full pt-3">
+                      <div className="min-w-[260px] border-t-4 border-amber bg-steel py-2 shadow-2xl">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            className="block px-5 py-3 font-display text-lg font-semibold uppercase tracking-[0.06em] text-bone hover:bg-iron hover:text-amber"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path!}
+                  className={`font-display text-lg font-semibold uppercase tracking-[0.1em] transition-colors ${
+                    location.pathname === item.path ? "text-amber" : "text-bone hover:text-amber"
                   }`}
                 >
                   {item.label}
-                </button>
-                {servicesOpen && (
-                  <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-card rounded-lg shadow-xl border border-border py-2 min-w-[220px]">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.path}
-                          to={child.path}
-                          className="block px-5 py-2.5 text-sm font-sans text-foreground hover:bg-muted hover:text-primary transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                key={item.path}
-                to={item.path!}
-                className={`font-sans font-medium text-sm tracking-wide uppercase transition-colors ${
-                  location.pathname === item.path ? "text-primary" : "text-foreground hover:text-primary"
-                }`}
-              >
-                {item.label}
-              </Link>
-            )
-          )}
-        </nav>
+                </Link>
+              )
+            )}
+          </nav>
 
-        {/* Desktop CTA */}
-        <a href="tel:6029752870" className="hidden lg:flex">
-          <Button variant="default" size="default" className="gap-2">
-            <Phone className="w-4 h-4" />
-            (602) 975-2870
-          </Button>
-        </a>
+          <Link to="/contact" className="btn-amber hidden !px-6 !py-3 !text-lg lg:inline-flex">
+            Free Estimate
+          </Link>
 
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden p-2 text-foreground"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex h-11 w-11 items-center justify-center border border-iron text-bone lg:hidden"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
 
-      {/* Mobile Nav */}
-      {isOpen && (
-        <div className="lg:hidden bg-card border-t border-border shadow-xl">
-          <div className="container py-4 space-y-1">
-            {NAV_ITEMS.map((item) =>
+        {isOpen && (
+          <nav className="wrap border-t border-iron pb-6 pt-2 lg:hidden" aria-label="Mobile">
+            {NAV.map((item) =>
               item.children ? (
-                <div key={item.label}>
+                <div key={item.label} className="border-b border-iron">
                   <button
+                    type="button"
                     onClick={() => setServicesOpen(!servicesOpen)}
-                    className="w-full text-left py-3 px-4 font-sans font-medium text-sm uppercase text-foreground"
+                    className="flex w-full items-center justify-between py-4 font-display text-2xl font-bold uppercase text-bone"
+                    aria-expanded={servicesOpen}
                   >
-                    {item.label}
+                    {item.label} <ChevronDown className={`h-5 w-5 transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
                   </button>
                   {servicesOpen && (
-                    <div className="pl-6 space-y-1">
+                    <div className="pb-3">
                       {item.children.map((child) => (
-                        <Link
-                          key={child.path}
-                          to={child.path}
-                          className="block py-2 px-4 text-sm font-sans text-muted-foreground hover:text-primary transition-colors"
-                        >
+                        <Link key={child.path} to={child.path} className="block py-2.5 pl-4 font-display text-lg uppercase text-ash hover:text-amber">
                           {child.label}
                         </Link>
                       ))}
@@ -150,21 +131,16 @@ export default function Header() {
                 <Link
                   key={item.path}
                   to={item.path!}
-                  className="block py-3 px-4 font-sans font-medium text-sm uppercase text-foreground hover:text-primary transition-colors"
+                  className="block border-b border-iron py-4 font-display text-2xl font-bold uppercase text-bone hover:text-amber"
                 >
                   {item.label}
                 </Link>
               )
             )}
-            <a href="tel:6029752870" className="block px-4 pt-2">
-              <Button variant="default" size="lg" className="w-full gap-2">
-                <Phone className="w-4 h-4" />
-                (602) 975-2870
-              </Button>
-            </a>
-          </div>
-        </div>
-      )}
+            <Link to="/contact" className="btn-amber mt-5 w-full">Get a Free Estimate</Link>
+          </nav>
+        )}
+      </div>
     </header>
   );
 }

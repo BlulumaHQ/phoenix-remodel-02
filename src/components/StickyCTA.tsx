@@ -1,40 +1,16 @@
 import { Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { SITE } from "@/lib/site";
 
 export default function StickyCTA() {
   return (
-    <>
-      {/* Desktop: fixed right side */}
-      <div className="hidden lg:block fixed right-0 top-1/2 -translate-y-1/2 z-40">
-        <a
-          href="tel:6029752870"
-          className="block"
-        >
-          <Button
-            variant="sticky"
-            size="lg"
-            className="rounded-r-none rounded-l-md writing-mode-vertical flex flex-col items-center gap-2 py-6 px-3"
-            style={{ writingMode: "vertical-lr" }}
-          >
-            <Phone className="w-4 h-4 rotate-90" />
-            Get a Free Estimate
-          </Button>
-        </a>
-      </div>
-
-      {/* Mobile: sticky bottom bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-primary-dark p-3 shadow-[0_-4px_20px_rgba(0,0,0,0.2)]"
-        style={{ backgroundColor: "hsl(var(--primary-dark))" }}
-      >
-        <div className="flex items-center justify-center gap-3">
-          <a href="tel:6029752870" className="flex-1">
-            <Button variant="sticky" size="lg" className="w-full gap-2 bg-primary hover:bg-primary/90">
-              <Phone className="w-4 h-4" />
-              Call (602) 975-2870
-            </Button>
-          </a>
-        </div>
-      </div>
-    </>
+    <div className="fixed bottom-0 left-0 right-0 z-40 grid grid-cols-2 border-t-4 border-amber bg-coal lg:hidden">
+      <a href={SITE.phoneHref} className="flex items-center justify-center gap-2 py-4 font-display text-lg font-bold uppercase tracking-[0.06em] text-bone">
+        <Phone className="h-4 w-4" /> Call Now
+      </a>
+      <Link to="/contact" className="flex items-center justify-center bg-amber py-4 font-display text-lg font-bold uppercase tracking-[0.06em] text-coal">
+        Free Estimate
+      </Link>
+    </div>
   );
 }
